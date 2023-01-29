@@ -1,20 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useQuery } from "react-query";
+import AdBillings from "../../AdBliings/AdBillings";
 import Button from "../../Button/Button";
 
 const Home = () => {
-    const [datas, setDatas] = useState();
-    const [loading, setLoading] = useState();
-    useEffect(() => {
-      setLoading(true)
-    fetch("http://localhost:5000/billing-list")
-      .then((res) => res.json())
-            .then((data) => setDatas(data));
-        setLoading(false)
-  }, []);
+  
+  const { data: billingList = [], isLoading, refetch } = useQuery({
+    queryKey: [''],
+    queryFn: async () => {
+        try {
+
+            const res = await fetch("http://localhost:5000/billing-list")
+            const data = await res.json();
+            return data;
+
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+})
   return (
       <div>
           <div className='overflow-x-auto'>
-          <table className='table table-compact w-[75%] mx-auto my-10'>
+          <table className='table table-normal w-[75%] mx-auto my-10'>
             <thead>
               <tr>
                 
@@ -26,10 +35,10 @@ const Home = () => {
                 <th>Action</th>
               </tr>
             </thead>
-            {datas?.map((data, i) => <tbody key={i}>
+            {billingList?.map((data, i) => <tbody key={i}>
               <tr>
                 
-                    <td>{loading?<Button/>:data?._id}</td>
+                    <td>{isLoading?<Button/>:data?._id}</td>
                 <td>{data?.fullName}</td>
                 <td>{data?.email}</td>
                 <td>{data?.phone}</td>
@@ -40,7 +49,8 @@ const Home = () => {
         
       )}
           </table>
-        </div>
+      </div>
+      <AdBillings refetch ={refetch}></AdBillings>
     </div>
   );
 };
