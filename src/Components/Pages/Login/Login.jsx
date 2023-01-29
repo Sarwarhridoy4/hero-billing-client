@@ -11,7 +11,7 @@ const Register = () => {
   
   
   const handelSignIn = (data) => {
-    console.log(data);
+    // console.log(data);
     
     const email = data.email;
     const password = data.password
