@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const {
@@ -171,6 +171,7 @@ const Register = () => {
             >
               Register
             </button>
+            <Link to='/login'>Already a User</Link>
           </div>
         </form>
       </div>

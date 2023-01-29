@@ -6,7 +6,8 @@ import Loading from '../../Loading/Loading';
 
 
 const Private = ({ children }) => {
-    const { user,loading } = useContext(AuthContext)
+    const { user, loading } = useContext(AuthContext)
+    console.log(user);
     const location = useLocation();
     if (loading) {
         return <Loading></Loading>
