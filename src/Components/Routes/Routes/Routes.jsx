@@ -4,6 +4,7 @@ import Main from "../../Layouts/Main/Main";
 import Home from "../../Pages/Home/Home";
 import Register from "../../Pages/Register/Register";
 import Login from "../../Pages/Login/Login";
+import UpdateBill from "../../UpdateBill/UpdateBill";
 
 
 const router = createBrowserRouter([
@@ -23,6 +24,14 @@ const router = createBrowserRouter([
         {
           path: "/login",
           element:<Login></Login>
+        },
+        {
+          path: "/update-billing/:id",
+          loader: ({ params }) =>
+          fetch(
+            `http://localhost:5000/update-billing/${params.id}`
+          ),
+          element:<UpdateBill></UpdateBill>
         },
         
       ],

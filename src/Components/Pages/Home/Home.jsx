@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
 import AdBillings from "../../AdBliings/AdBillings";
 import Button from "../../Button/Button";
 
@@ -19,7 +20,8 @@ const Home = () => {
             console.log(err);
         }
     }
-})
+  })
+  
   return (
       <div>
           <div className='overflow-x-auto'>
@@ -35,7 +37,8 @@ const Home = () => {
                 <th>Action</th>
               </tr>
             </thead>
-            {billingList?.map((data, i) => <tbody key={i}>
+          {billingList?.map((data, i) => <tbody key={data._id}>
+            
               <tr>
                 
                     <td>{isLoading?<Button/>:data?._id}</td>
@@ -43,14 +46,15 @@ const Home = () => {
                 <td>{data?.email}</td>
                 <td>{data?.phone}</td>
                 <td>$ {data?.paidAmount}</td>
-                <td className="ml-5"><button className="btn btn-xs uppercase btn-outline btn-error">Delete</button><button className="btn btn-xs btn-info uppercase">Edit</button></td>
+                <td className="ml-5"><button className="btn btn-xs uppercase btn-outline btn-error">Delete</button><Link to={`/update-billing/${data?._id}`}><button className="btn btn-xs btn-info uppercase">Edit</button></Link></td>
               </tr>
             </tbody>
         
       )}
           </table>
       </div>
-      <AdBillings refetch ={refetch}></AdBillings>
+      <AdBillings refetch={refetch}></AdBillings>
+      
     </div>
   );
 };
