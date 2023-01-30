@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Contexts/Auth/AuthContext";
 
 const AdBillings = ({refetch}) => {
   const navigate = useNavigate();
+  const phoneNumberRegex = /^\d{11}$/;
+  const { setTotal,total } = useContext(AuthContext)
+  const [current,setCurrent] = useState(0)
   //event handler
   const handelAddBilling = (event) => {
     event.preventDefault();
@@ -12,7 +16,10 @@ const AdBillings = ({refetch}) => {
     const email = form.email.value;
     const phone = form.phone.value;
     const paidAmount = form.paidAmount.value;
-
+    setCurrent(parseInt(paidAmount))
+    const totalAmount = total + current;
+    setTotal(totalAmount)
+    console.log();
     const billingdata = {
       fullName,
       email,
@@ -70,7 +77,8 @@ const AdBillings = ({refetch}) => {
               <input
                 type='number'
                 name='phone'
-                placeholder='Phone Number'
+                placeholder='Phone Number Must be 11 digit'
+                pattern={phoneNumberRegex}
                 className='input input-bordered input-primary w-full max-w-xs mx-auto block'
                 required
               />
