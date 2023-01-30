@@ -1,11 +1,12 @@
 import React from "react";
+import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AdBillings from "../../AdBliings/AdBillings";
 import Button from "../../Button/Button";
 
 const Home = () => {
-  
+  const navigate = useNavigate()
   const { data: billingList = [], isLoading, refetch } = useQuery({
     queryKey: [''],
     queryFn: async () => {
@@ -22,6 +23,19 @@ const Home = () => {
     }
   })
   
+  const handelDeleteBill = (_id) => {
+    // console.log(task);
+    fetch(`http://localhost:5000/delete-billing/${_id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        // console.log(result);
+        toast.success(`item deleted.`);
+        refetch()
+        navigate(`/`);
+      });
+  };
   return (
       <div>
           <div className='overflow-x-auto'>
@@ -46,7 +60,7 @@ const Home = () => {
                 <td>{data?.email}</td>
                 <td>{data?.phone}</td>
                 <td>$ {data?.paidAmount}</td>
-                <td className="ml-5"><button className="btn btn-xs uppercase btn-outline btn-error">Delete</button><Link to={`/update-billing/${data?._id}`}><button className="btn btn-xs btn-info uppercase">Edit</button></Link></td>
+                <td className="ml-5"><button onClick={() => handelDeleteBill(data?._id)} className="btn btn-xs uppercase btn-outline btn-error">Delete</button><Link to={`/update-billing/${data?._id}`}><button className="btn btn-xs btn-info uppercase">Edit</button></Link></td>
               </tr>
             </tbody>
         
