@@ -33,13 +33,16 @@ const Register = () => {
           };
           // console.log(task);
           //   save task to the database
-          fetch("http://localhost:5000/registration", {
-            method: "PUT",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify(task),
-          })
+          fetch(
+            "https://hero-billing-server-0-sarwarhridoy4.vercel.app/registration",
+            {
+              method: "PUT",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify(task),
+            }
+          )
             .then((res) => res.json())
             .then((result) => {
               // console.log(result);

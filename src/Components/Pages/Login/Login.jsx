@@ -1,28 +1,33 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import {AuthContext} from "../../Contexts/Auth/AuthContext"
+import { AuthContext } from "../../Contexts/Auth/AuthContext";
 
 const Register = () => {
   const [users, setUsers] = useState([]);
-  const {register,handleSubmit,formState: { errors },} = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const { setUser } = useContext(AuthContext);
-  const navigate = useNavigate()
-  
-  
+  const navigate = useNavigate();
+
   const handelSignIn = (data) => {
     // console.log(data);
-    
+
     const email = data.email;
-    const password = data.password
-    fetch('http://localhost:5000/login')
-      .then(res => res.json())
-      .then(data => setUsers(data))
-    const user = users.filter(user=> user.email === email && user.password === password)
+    const password = data.password;
+    fetch("https://hero-billing-server-0-sarwarhridoy4.vercel.app/login")
+      .then((res) => res.json())
+      .then((data) => setUsers(data));
+    const user = users.filter(
+      (user) => user.email === email && user.password === password
+    );
     setUser(user);
-    navigate('/')
+    navigate("/");
   };
-  
+
   return (
     <div className='flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
       <div className='w-full max-w-md space-y-8'>
@@ -39,7 +44,6 @@ const Register = () => {
           method='POST'
         >
           <div className='-space-y-px rounded-md shadow-sm'>
-
             <div>
               <label htmlFor='user-email' className='sr-only'>
                 User Email

@@ -3,11 +3,11 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Contexts/Auth/AuthContext";
 
-const AdBillings = ({refetch}) => {
+const AdBillings = ({ refetch }) => {
   const navigate = useNavigate();
   const phoneNumberRegex = /^\d{11}$/;
-  const { setTotal,total } = useContext(AuthContext)
-  const [current,setCurrent] = useState(0)
+  const { setTotal, total } = useContext(AuthContext);
+  const [current, setCurrent] = useState(0);
   //event handler
   const handelAddBilling = (event) => {
     event.preventDefault();
@@ -16,9 +16,9 @@ const AdBillings = ({refetch}) => {
     const email = form.email.value;
     const phone = form.phone.value;
     const paidAmount = form.paidAmount.value;
-    setCurrent(parseInt(paidAmount))
+    setCurrent(parseInt(paidAmount));
     const totalAmount = total + current;
-    setTotal(totalAmount)
+    setTotal(totalAmount);
     console.log();
     const billingdata = {
       fullName,
@@ -29,16 +29,19 @@ const AdBillings = ({refetch}) => {
     // console.log(bookingdata);
     event.target.reset();
     //posting to server
-    fetch("http://localhost:5000/add-billing", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(billingdata),
-    })
+    fetch(
+      "https://hero-billing-server-0-sarwarhridoy4.vercel.app/add-billing",
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(billingdata),
+      }
+    )
       .then((res) => res.json())
-        .then((data) => {
-        refetch()
+      .then((data) => {
+        refetch();
         navigate("/");
         toast.success("Successfully Added!");
       });

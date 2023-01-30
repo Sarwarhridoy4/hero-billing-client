@@ -24,15 +24,18 @@ const UpdateBill = () => {
     // console.log(bookingdata);
     event.target.reset();
     //posting to server
-    fetch(`http://localhost:5000/update-billing/${bills?._id}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(billingdata),
-    })
+    fetch(
+      `https://hero-billing-server-0-sarwarhridoy4.vercel.app/update-billing/${bills?._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(billingdata),
+      }
+    )
       .then((res) => res.json())
-        .then((data) => {
+      .then((data) => {
         navigate("/");
         toast.success("Successfully Updated!");
       });
@@ -40,10 +43,9 @@ const UpdateBill = () => {
 
   return (
     <div>
-      
       <div className=''>
         <div className='py-10'>
-          <h4 className="text-2xl">Update Document</h4>
+          <h4 className='text-2xl'>Update Document</h4>
           <form onSubmit={handelUpdateBill}>
             <div className='grid grid-cols-1 gap-3'>
               {/* Full Name */}
